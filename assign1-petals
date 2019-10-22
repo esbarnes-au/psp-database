@@ -1,0 +1,186 @@
+# No limitation to user input to integer only during guess input
+# Disallowed as not officially taught yet, and this was a uni project
+
+import dice
+import random
+
+# Display details of game
+
+print("Petals Around the Rose")
+print("---------------------\n")
+print("The name of the game is 'Petals Around the Rose'.  The name of the")
+print("game is important.  The computer will roll five dice and ask you to")
+print("guess the score for the roll.  The score will always be zero or an")
+print("even number.  Your mission, should you choose to accept it, is to")
+print("work out how the computer calculates the score.  If you succeed in")
+print("working out the secret and guess correctly four times in a row, you")
+print("become a Potentate of the Rose.\n")
+
+# Randomly generate the roll of five dice
+
+die1 = random.randint(1, 6)
+die2 = random.randint(1, 6)
+die3 = random.randint(1, 6)
+die4 = random.randint(1, 6)
+die5 = random.randint(1, 6)
+
+# Define the answer/total of dice
+
+answer = 0
+
+if die1 == 3 or die1 == 5:
+    answer += die1 - 1
+
+if die2 == 3 or die2 == 5:
+    answer += die2 - 1
+
+if die3 == 3 or die3 == 5:
+    answer += die3 - 1
+
+if die4 == 3 or die4 == 5:
+    answer += die4 - 1
+
+if die5 == 3 or die5 == 5:
+    answer += die5 - 1
+
+# Ask user if they want to play
+
+play = input("Would you like to play Petals Around the Rose [y|n]?")
+
+while play.lower() != 'y' and play.lower() != 'n':
+    print("Please enter either 'y' or 'n'.\n")
+    play = input("Would you like to play Petals Around the Rose [y|n]?")
+
+# User declines to play
+
+if play.lower() == "n":
+    print("\n")
+    print("No worries... another time perhaps... :)")
+
+# User scores defined as null to begin
+
+total_games = 0
+games_won = 0
+games_lost = 0
+loss_streak = 0
+win_streak = 0
+
+# Display roll of dice and prompt user guess
+
+if play.lower() == "y":
+    dice.display_dice(die1, die2, die3, die4, die5)
+    guess = int(input("Please enter your guess for the roll: "))
+
+# Display guess result
+
+    if guess == answer:
+        print("Well done, you guessed it!")
+        total_games += 1
+        games_won += 1
+        win_streak += 1
+        loss_streak -= 1
+
+    elif guess % 2 == 0:
+        print("No sorry, it\'s", answer, "not", guess,".")
+        total_games += 1
+        games_lost += 1
+        loss_streak += 1
+        win_streak -= 1
+
+    else:
+        print("No sorry, it\'s", answer, "not", guess, ". The score is always even.")
+        total_games += 1
+        games_lost += 1
+        loss_streak += 1
+        win_streak -= 1
+
+        
+# Ask user to play again
+
+    play_again = input("Roll dice again [y|n]?")
+
+    while play_again.lower() != 'y' and play_again.lower() != 'n':
+        print("Please enter either 'y' or 'n'.\n")
+        play_again = input("Roll dice again [y|n]?")
+
+    if play_again.lower() == 'n':
+        print("\n")
+        print("Game Summary")
+        print("============\n")
+        print("You played", total_games,"game:")
+        print("|--> Number of correct guesses:       ", games_won)
+        print("|--> Number of incorrect guesses:     ", games_lost)
+
+# Play again loop
+
+    while play_again.lower() == 'y':
+        die1 = random.randint(1,6)
+        die2 = random.randint(1,6)
+        die3 = random.randint(1,6)
+        die4 = random.randint(1,6)
+        die5 = random.randint(1,6)
+        dice.display_dice(die1, die2, die3, die4, die5)
+
+        answer = 0
+
+        if die1 == 3 or die1 == 5:
+            answer += die1 - 1
+
+        if die2 == 3 or die2 == 5:
+            answer += die2 - 1
+
+        if die3 == 3 or die3 == 5:
+            answer += die3 - 1
+
+        if die4 == 3 or die4 == 5:
+            answer += die4 - 1
+
+        if die5 == 3 or die5 == 5:
+            answer += die5 - 1
+
+        guess = int(input('Please enter your guess for the roll: '))
+        if guess == answer:
+            print("Well done, you guessed it!")
+            total_games += 1
+            games_won += 1
+            win_streak += 1
+            loss_streak -= 1
+
+        elif guess % 2 == 0:
+            print("No sorry, it\'s", answer, "not", guess,".")
+            total_games += 1
+            games_lost += 1
+            loss_streak += 1
+            win_streak -= 1
+
+        else:
+            print("No sorry, it\'s", answer, "not", guess, ". The score is always even.")
+            total_games += 1
+            games_lost += 1
+            loss_streak += 1
+            win_streak -= 1
+
+        if loss_streak == 4:
+            print("Hint: The name of the game is important... Petals Around the Rose.")
+            loss_streak = 0
+
+        if win_streak == 4:
+            print("Congratulations! You have worked out the secret!")
+            print("Make sure you don't tell anyone!")
+            win_streak = 0
+
+        play_again = input("Roll dice again [y|n]?")
+
+        while play_again.lower() != 'y' and play_again.lower() != 'n':
+            print("Please enter either 'y' or 'n'.\n")
+            play_again = input("Roll dice again [y|n]?")
+
+        if play_again.lower() == 'n':
+            print("\n")
+            print("Game Summary")
+            print("============\n")
+            print("You played", total_games,"games:")
+            print("|--> Number of correct guesses:       ", games_won)
+            print("|--> Number of incorrect guesses:     ", games_lost)
+
+
